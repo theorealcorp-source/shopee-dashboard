@@ -9,325 +9,128 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-/* ── Taste-Skill Design System: Dark Dashboard ── */
 :root {
-  /* Surfaces — taste-skill: neutral zinc/slate base, one accent */
   --bg-deep: #08090b;
   --bg-base: #0d0f10;
   --bg-panel: #131517;
   --bg-elevated: #1a1c1f;
   --bg-hover: rgba(255,255,255,0.03);
-
-  /* Text — taste-skill: 4-level hierarchy */
   --text-primary: #f0f1f3;
   --text-secondary: #c9cdd4;
   --text-tertiary: #7e828a;
   --text-muted: #53575e;
-
-  /* Accent — taste-skill: Emerald (not AI purple) */
   --accent: #10b981;
   --accent-dim: rgba(16,185,129,0.15);
   --accent-glow: rgba(16,185,129,0.08);
   --emerald-light: #34d399;
   --emerald-bright: #6ee7b7;
-
-  /* Semantic */
   --amber: #f59e0b;
   --amber-dim: rgba(245,158,11,0.12);
   --red: #ef4444;
   --red-dim: rgba(239,68,68,0.12);
   --sky: #38bdf8;
   --sky-dim: rgba(56,189,248,0.12);
-
-  /* Borders — taste-skill: tinted, not pure white */
   --border: rgba(255,255,255,0.07);
   --border-strong: rgba(255,255,255,0.10);
-
-  /* Radii — taste-skill: consistent scale */
   --radius-sm: 6px;
   --radius: 10px;
   --radius-lg: 14px;
   --radius-xl: 20px;
-
-  /* Shadows — taste-skill: diffusion shadow, tinted */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
   --shadow: 0 4px 12px rgba(0,0,0,0.3);
   --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
-
-  /* Transitions */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-
-body{
-  background: var(--bg-deep);
-  color: var(--text-secondary);
-  font-family: 'Geist', system-ui, -apple-system, sans-serif;
-  font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: -0.01em;
-}
-
-/* ── Layout ── */
+body{background:var(--bg-deep);color:var(--text-secondary);font-family:'Geist',system-ui,-apple-system,sans-serif;font-weight:400;line-height:1.55;letter-spacing:-0.01em}
 .container{max-width:1260px;margin:0 auto;padding:0 28px}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .grid-bento{display:grid;grid-template-columns:2fr 1fr;gap:20px}
-
-/* ── Header — taste-skill: sticky, backdrop-blur, subtle border ── */
-header{
-  position: sticky; top: 0; z-index: 20;
-  background: rgba(8,9,11,0.82);
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  border-bottom: 1px solid var(--border);
-}
-header .container{
-  display:flex; justify-content:space-between; align-items:center;
-  padding-top: 15px; padding-bottom: 15px;
-}
+header{position:sticky;top:0;z-index:20;background:rgba(8,9,11,0.82);backdrop-filter:blur(16px) saturate(120%);-webkit-backdrop-filter:blur(16px) saturate(120%);border-bottom:1px solid var(--border)}
+header .container{display:flex;justify-content:space-between;align-items:center;padding-top:15px;padding-bottom:15px}
 .brand{display:flex;align-items:center;gap:10px}
-.brand-icon{
-  width: 26px; height: 26px;
-  background: linear-gradient(135deg, var(--accent), var(--emerald-light));
-  border-radius: 7px;
-  display:flex; align-items:center; justify-content:center;
-}
+.brand-icon{width:26px;height:26px;background:linear-gradient(135deg,var(--accent),var(--emerald-light));border-radius:7px;display:flex;align-items:center;justify-content:center}
 .brand-icon svg{width:14px;height:14px;color:#0a0a0a}
 .brand-label{font-size:15px;font-weight:550;color:var(--text-primary);letter-spacing:-0.2px}
 .header-meta{font-size:11px;color:var(--text-muted);font-family:'Geist Mono',monospace}
-
-/* ── Hero Stats — taste-skill: not 4 equal cards, varied emphasis ── */
 .hero{padding:44px 0 32px}
-.hero .stats-row{
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 16px;
-}
-.stat-card{
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px 22px;
-  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
-  position: relative; overflow: hidden;
-}
-.stat-card:hover{
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
-}
-.stat-card.primary{
-  background: linear-gradient(145deg, var(--bg-elevated), var(--bg-panel));
-  border-color: var(--border-strong);
-}
-.stat-card.primary::before{
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--emerald-light));
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-.stat-label{
-  font-size: 11px; font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.06em;
-  margin-bottom: 8px;
-}
-.stat-value{
-  font-size: 30px; font-weight: 640;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-.stat-sub{
-  font-size: 12px; color: var(--text-tertiary);
-  margin-top: 6px;
-  display: flex; align-items: center; gap: 6px;
-}
-.stat-change{
-  font-size: 12px; font-weight: 520;
-  padding: 2px 7px; border-radius: var(--radius-sm);
-}
-.stat-change.up{background: var(--accent-dim);color: var(--emerald-light)}
-.stat-change.down{background: var(--red-dim);color: var(--red)}
-
-/* ── Sections ── */
-.section{padding: 32px 0}
-.section-header{
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 20px;
-}
-.section-title{
-  font-size: 16px; font-weight: 580;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-  display: flex; align-items: center; gap: 8px;
-}
-.section-title .section-icon{color: var(--text-muted)}
-.section-sub{font-size: 12px;color:var(--text-muted)}
-
-/* ── Chart Cards — taste-skill: subtle shadow, clean border ── */
-.chart-card{
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-}
-.chart-title{
-  font-size: 12px; font-weight: 510;
-  color: var(--text-tertiary);
-  text-transform: uppercase; letter-spacing: 0.04em;
-  margin-bottom: 16px;
-}
+.hero .stats-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:16px}
+.stat-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;transition:border-color 0.2s var(--ease),box-shadow 0.2s var(--ease);position:relative;overflow:hidden}
+.stat-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm)}
+.stat-card.primary{background:linear-gradient(145deg,var(--bg-elevated),var(--bg-panel));border-color:var(--border-strong)}
+.stat-card.primary::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--emerald-light));border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.stat-label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.stat-value{font-size:30px;font-weight:640;color:var(--text-primary);letter-spacing:-0.03em;line-height:1.15}
+.stat-sub{font-size:12px;color:var(--text-tertiary);margin-top:6px;display:flex;align-items:center;gap:6px}
+.stat-change{font-size:12px;font-weight:520;padding:2px 7px;border-radius:var(--radius-sm)}
+.stat-change.up{background:var(--accent-dim);color:var(--emerald-light)}
+.stat-change.down{background:var(--red-dim);color:var(--red)}
+.section{padding:32px 0}
+.section-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}
+.section-title{font-size:16px;font-weight:580;color:var(--text-primary);letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.section-title .section-icon{color:var(--text-muted)}
+.section-sub{font-size:12px;color:var(--text-muted)}
+.chart-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px}
+.chart-title{font-size:12px;font-weight:510;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:16px}
 .chart-card canvas{max-height:260px}
-
-/* ── Table ── */
-.table-wrap{
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
+.table-wrap{background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
 table{width:100%;border-collapse:collapse}
-thead th{
-  font-size: 11px; font-weight: 520;
-  color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.05em;
-  padding: 12px 18px; text-align: left;
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border);
-}
-tbody td{
-  padding: 13px 18px; font-size: 13px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  color: var(--text-secondary);
-}
+thead th{font-size:11px;font-weight:520;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:12px 18px;text-align:left;background:var(--bg-elevated);border-bottom:1px solid var(--border)}
+tbody td{padding:13px 18px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary)}
 tbody tr:hover{background:var(--bg-hover)}
 tbody tr:last-child td{border-bottom:none}
 .name-cell{max-width:200px}
-.item-name{
-  display:block;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.item-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mono{font-family:'Geist Mono',monospace;font-size:12px;color:var(--text-primary)}
 .price-up{color:var(--red)}
 .price-down{color:var(--emerald-light)}
 .price-same{color:var(--text-tertiary)}
-
-/* ── Spark ── */
 .spark{display:flex;align-items:flex-end;gap:2px;height:24px}
 .spark-bar{width:3px;border-radius:1px;background:var(--accent);opacity:0.5}
 .spark-bar.high{opacity:1;background:var(--emerald-light)}
-
-/* ── Bar track ── */
 .bar-track{width:80px;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
 .bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.6s var(--ease)}
-
-/* ── Badges — taste-skill: pill, subtle tint ── */
-.badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:3px 11px;border-radius:999px;
-  font-size:11px;font-weight:500;
-}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:500}
 .badge-warn{background:var(--amber-dim);color:var(--amber)}
 .badge-ok{background:var(--accent-dim);color:var(--emerald-light)}
 .badge-info{background:rgba(255,255,255,0.04);color:var(--text-muted)}
 .badge-ship{background:var(--sky-dim);color:var(--sky)}
-
-/* ── Calendar Grid ── */
 .cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-.cal-item{
-  display:flex;align-items:center;gap:14px;
-  padding:15px 18px;
-  background:var(--bg-panel);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  transition: border-color 0.2s var(--ease);
-}
+.cal-item{display:flex;align-items:center;gap:14px;padding:15px 18px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);transition:border-color 0.2s var(--ease)}
 .cal-item:hover{border-color:var(--border-strong)}
 .cal-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .cal-info{flex:1;min-width:0}
-.cal-name{
-  font-size:13px;font-weight:510;color:var(--text-primary);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.cal-name{font-size:13px;font-weight:510;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cal-meta{font-size:11px;color:var(--text-muted);margin-top:3px}
-.cal-days{
-  font-size:22px;font-weight:620;
-  font-family:'Geist Mono',monospace;
-  flex-shrink:0;
-}
-
-/* ── Insights — taste-skill: asymmetric layout, not uniform grid ── */
-.insights{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.insight-tile{
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
-}
-.insight-tile:hover{
-  border-color: var(--border-strong);
-  transform: translateY(-1px);
-}
+.cal-days{font-size:22px;font-weight:620;font-family:'Geist Mono',monospace;flex-shrink:0}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.insight-tile{background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;transition:border-color 0.25s var(--ease),transform 0.25s var(--ease)}
+.insight-tile:hover{border-color:var(--border-strong);transform:translateY(-1px)}
 .insight-tile:nth-child(1){grid-column:span 2}
 .insight-tile:nth-child(2){grid-column:span 1}
 .insight-tile:nth-child(3){grid-column:span 1}
 .insight-tile:nth-child(4){grid-column:span 1}
 .insight-tile:nth-child(5){grid-column:span 1}
 .insight-tile:nth-child(6){grid-column:span 1}
-.insight-icon{
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-.insight-title{
-  font-size: 14px; font-weight: 560;
-  color: var(--text-primary);
-  margin-bottom: 5px;
-  letter-spacing: -0.01em;
-}
-.insight-desc{
-  font-size: 12px; color: var(--text-tertiary);
-  line-height: 1.55;
-  max-width: 58ch;
-}
-
-/* ── Footer ── */
-footer{
-  padding: 40px 0;
-  border-top: 1px solid var(--border);
-  margin-top: 20px;
-}
-footer .footer-text{
-  font-size: 12px; color: var(--text-muted);
-}
-
-/* ── Responsive ── */
+.insight-icon{color:var(--accent);margin-bottom:10px}
+.insight-title{font-size:14px;font-weight:560;color:var(--text-primary);margin-bottom:5px;letter-spacing:-0.01em}
+.insight-desc{font-size:12px;color:var(--text-tertiary);line-height:1.55;max-width:58ch}
+footer{padding:40px 0;border-top:1px solid var(--border);margin-top:20px}
+footer .footer-text{font-size:12px;color:var(--text-muted)}
 @media(max-width:1000px){
   .hero .stats-row{grid-template-columns:repeat(2,1fr)}
   .stat-card.primary{grid-column:span 2}
-  .grid-4{grid-template-columns:repeat(2,1fr)}
-  .grid-bento,.charts-row{grid-template-columns:1fr}
-  .grid-3{grid-template-columns:1fr}
+  .grid-bento{grid-template-columns:1fr}
   .insight-tile:nth-child(1){grid-column:span 1}
 }
 @media(max-width:600px){
   .container{padding:0 16px}
-  .hero .stats-row,.grid-4{grid-template-columns:1fr}
+  .hero .stats-row{grid-template-columns:1fr}
   .stat-card.primary{grid-column:span 1}
   .cal-grid{grid-template-columns:1fr}
   .stat-value{font-size:26px}
 }
-
-/* ── Scrollbar — taste-skill: subtle ── */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
@@ -347,39 +150,37 @@ footer .footer-text{
       <span class="brand-label">Shopee</span>
       <span style="font-size:13px;color:var(--text-tertiary);font-weight:400">지출 분석</span>
     </div>
-    <span class="header-meta">2026-06-15 기준 · 365주문</span>
+    <span class="header-meta">2026-06-22 기준 · 368주문</span>
   </div>
 </header>
 
 <div class="container">
 
-<!-- Hero Stats → taste-skill: primary card first with top accent bar -->
 <section class="hero">
   <div class="stats-row">
     <div class="stat-card primary">
       <div class="stat-label">총 지출 (완료 기준)</div>
-      <div class="stat-value">₱167,690</div>
-      <div class="stat-sub">주문 365건 · 건당 ₱459.42</div>
+      <div class="stat-value">₱173,629</div>
+      <div class="stat-sub">주문 368건 · 건당 ₱472</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">이번 달</div>
-      <div class="stat-value">₱1,648</div>
-      <div class="stat-sub"><span class="stat-change down">-84%</span> 전월 대비</div>
+      <div class="stat-value">₱7,587</div>
+      <div class="stat-sub"><span class="stat-change down">-28%</span> 전월 대비</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">진행 중</div>
-      <div class="stat-value">2<small style="font-size:17px;color:var(--text-muted);font-weight:400">건</small></div>
+      <div class="stat-value">1<small style="font-size:17px;color:var(--text-muted);font-weight:400">건</small></div>
       <div class="stat-sub">배송중 · 준비중</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">월 평균</div>
-      <div class="stat-value">₱5,458</div>
+      <div class="stat-value">₱6,448</div>
       <div class="stat-sub">6개월 기준 · 최고 ₱10,507</div>
     </div>
   </div>
 </section>
 
-<!-- Charts → taste-skill: bento ratio 2:1 -->
 <section class="section">
   <div class="section-header">
     <div class="section-title">
@@ -400,7 +201,6 @@ footer .footer-text{
   </div>
 </section>
 
-<!-- Repurchase → taste-skill: clean table, no emoji -->
 <section class="section">
   <div class="section-header">
     <div class="section-title">
@@ -426,7 +226,7 @@ footer .footer-text{
       <td><div class="spark"><span class="spark-bar " style="height:65%"></span><span class="spark-bar " style="height:65%"></span><span class="spark-bar " style="height:65%"></span><span class="spark-bar high" style="height:100%"></span><span class="spark-bar " style="height:65%"></span></div></td>
       <td class="mono">₱306</td>
       <td class="mono">₱469</td>
-      <td class="mono price-up">₱307</td>
+      <td class="mono price-same">₱307</td>
       <td><span class="badge badge-info">&mdash;</span></td>
     </tr><tr>
       <td class="name-cell"><span class="item-name">Meal & Story Wheat Flour Rice Cake Topokki Whole 1kg</span></td>
@@ -437,12 +237,20 @@ footer .footer-text{
       <td class="mono price-up">₱342</td>
       <td><span class="badge badge-info">&mdash;</span></td>
     </tr><tr>
+      <td class="name-cell"><span class="item-name">Petlicious Cat Dry Food Salmon and Tuna Flavor 1kg Collection</span></td>
+      <td class="mono">4회</td>
+      <td><div class="spark"><span class="spark-bar high" style="height:100%"></span><span class="spark-bar high" style="height:100%"></span><span class="spark-bar high" style="height:100%"></span><span class="spark-bar high" style="height:100%"></span></div></td>
+      <td class="mono">₱135</td>
+      <td class="mono">₱135</td>
+      <td class="mono price-same">₱135</td>
+      <td><span class="badge badge-info">&mdash;</span></td>
+    </tr><tr>
       <td class="name-cell"><span class="item-name">480 sheets Tissue 1pack(8pcs) ICHI Organic Facial Tissue Paper towel 3 ply ichi wood taste series ti</span></td>
       <td class="mono">4회</td>
       <td><div class="spark"><span class="spark-bar " style="height:75%"></span><span class="spark-bar high" style="height:100%"></span><span class="spark-bar " style="height:22%"></span><span class="spark-bar " style="height:44%"></span></div></td>
       <td class="mono">₱96</td>
       <td class="mono">₱436</td>
-      <td class="mono price-down">₱192</td>
+      <td class="mono price-same">₱192</td>
       <td><span class="badge badge-info">&mdash;</span></td>
     </tr><tr>
       <td class="name-cell"><span class="item-name">Necktie saltnic E-Liquid 30ML</span></td>
@@ -452,12 +260,27 @@ footer .footer-text{
       <td class="mono">₱300</td>
       <td class="mono price-same">₱300</td>
       <td><span class="badge badge-info">&mdash;</span></td>
+    </tr><tr>
+      <td class="name-cell"><span class="item-name">Essential Oil for Humidifier Diffuser Fragrance Premium Hotel Scents Linen Spray (1Liter)</span></td>
+      <td class="mono">4회</td>
+      <td><div class="spark"><span class="spark-bar " style="height:42%"></span><span class="spark-bar " style="height:42%"></span><span class="spark-bar " style="height:42%"></span><span class="spark-bar high" style="height:100%"></span></div></td>
+      <td class="mono">₱109</td>
+      <td class="mono">₱256</td>
+      <td class="mono price-up">₱256</td>
+      <td><span class="badge badge-warn">🔔 -633일 내</span></td>
+    </tr><tr>
+      <td class="name-cell"><span class="item-name">Ottogi Jin Ramen Noodle - Mild, Spicy - 600g (120gx5) - 5pcs/pck</span></td>
+      <td class="mono">3회</td>
+      <td><div class="spark"><span class="spark-bar high" style="height:96%"></span><span class="spark-bar high" style="height:100%"></span><span class="spark-bar high" style="height:96%"></span></div></td>
+      <td class="mono">₱169</td>
+      <td class="mono">₱175</td>
+      <td class="mono price-down">₱169</td>
+      <td><span class="badge badge-info">&mdash;</span></td>
     </tr></tbody>
     </table>
   </div>
 </section>
 
-<!-- Calendar -->
 <section class="section">
   <div class="section-header">
     <div class="section-title">
@@ -472,46 +295,59 @@ footer .footer-text{
         <div class="cal-name">Fire-Free Aromatherapy Essential Oil Aromatherapy Bedroom Air Freshener Dried Flowers Fragrance</div>
         <div class="cal-meta">마지막 2024-07-22 · 평균 0일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-694일</div>
+      <div class="cal-days" style="color:var(--amber)">-701일</div>
     </div><div class="cal-item">
       <div class="cal-dot" style="background:var(--amber)"></div>
       <div class="cal-info">
         <div class="cal-name">Camping chair buy 1 take 1 Outdoor foldable chair Camping Chair Heavy Duty Portable fishing chair</div>
         <div class="cal-meta">마지막 2024-07-27 · 평균 0일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-689일</div>
+      <div class="cal-days" style="color:var(--amber)">-696일</div>
     </div><div class="cal-item">
       <div class="cal-dot" style="background:var(--amber)"></div>
       <div class="cal-info">
         <div class="cal-name">Orashare BS04 Bluetooth Speaker With RGB Light TWS 20W Big Sound Portable Wireless Speaker</div>
         <div class="cal-meta">마지막 2024-07-30 · 평균 3일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-683일</div>
+      <div class="cal-days" style="color:var(--amber)">-690일</div>
     </div><div class="cal-item">
       <div class="cal-dot" style="background:var(--amber)"></div>
       <div class="cal-info">
         <div class="cal-name">Linen Storage Bins Clothes Organizer Storage Box Foldable Drawer Wardrobe Baskets Closet Organizer</div>
         <div class="cal-meta">마지막 2024-08-09 · 평균 0일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-676일</div>
+      <div class="cal-days" style="color:var(--amber)">-683일</div>
     </div><div class="cal-item">
       <div class="cal-dot" style="background:var(--amber)"></div>
       <div class="cal-info">
         <div class="cal-name">Monee Luxury HD Acrylic Shockproof transparent Case compatible For iPhone 15 14 13 12 11 Pro Max with Lens Full Cover Protective case iPhone 15 Plus Silicone Edge Hard Back Phone Case Cover</div>
         <div class="cal-meta">마지막 2024-08-15 · 평균 0일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-670일</div>
+      <div class="cal-days" style="color:var(--amber)">-677일</div>
     </div><div class="cal-item">
       <div class="cal-dot" style="background:var(--amber)"></div>
       <div class="cal-info">
         <div class="cal-name">IMUTO 5-Speed Shower Set With Faucet Handheld Shower Bathroom Shower Head High Pressure With Hose</div>
         <div class="cal-meta">마지막 2024-08-17 · 평균 0일 주기</div>
       </div>
-      <div class="cal-days" style="color:var(--amber)">-668일</div>
+      <div class="cal-days" style="color:var(--amber)">-675일</div>
+    </div><div class="cal-item">
+      <div class="cal-dot" style="background:var(--amber)"></div>
+      <div class="cal-info">
+        <div class="cal-name">1pc Stackable Bin Boxes Storage Organizer for Supplies, Tools & Medicines</div>
+        <div class="cal-meta">마지막 2024-09-21 · 평균 0일 주기</div>
+      </div>
+      <div class="cal-days" style="color:var(--amber)">-640일</div>
+    </div><div class="cal-item">
+      <div class="cal-dot" style="background:var(--amber)"></div>
+      <div class="cal-info">
+        <div class="cal-name">Essential Oil for Humidifier Diffuser Fragrance Premium Hotel Scents Linen Spray (1Liter)</div>
+        <div class="cal-meta">마지막 2024-09-16 · 평균 12일 주기</div>
+      </div>
+      <div class="cal-days" style="color:var(--amber)">-633일</div>
     </div></div>
 </section>
 
-<!-- Shops -->
 <section class="section">
   <div class="section-header">
     <div class="section-title">
@@ -534,49 +370,48 @@ footer .footer-text{
       <td class="mono">1</td>
       <td class="mono">₱6,858</td>
       <td class="mono">₱6,858</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:66.15221375518472%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:66.2%"></div></div></td>
+    </tr><tr>
+      <td>70mai Official Store</td>
+      <td class="mono">1</td>
+      <td class="mono">₱5,491</td>
+      <td class="mono">₱5,491</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:53.0%"></div></div></td>
     </tr><tr>
       <td>MOIZY</td>
       <td class="mono">1</td>
       <td class="mono">₱5,203</td>
       <td class="mono">₱5,203</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:50.18809684576059%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:50.2%"></div></div></td>
     </tr><tr>
       <td>Xiaomi Mi Online</td>
       <td class="mono">1</td>
       <td class="mono">₱4,072</td>
       <td class="mono">₱4,072</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:39.27847979164657%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:39.3%"></div></div></td>
     </tr><tr>
       <td>NESTA Mattress & Home</td>
       <td class="mono">1</td>
       <td class="mono">₱3,949</td>
       <td class="mono">₱3,949</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:38.09202276454133%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:38.1%"></div></div></td>
     </tr><tr>
       <td>Xiaomi Official Store Global</td>
       <td class="mono">1</td>
       <td class="mono">₱3,773</td>
       <td class="mono">₱3,773</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:36.394328156650914%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:36.4%"></div></div></td>
     </tr><tr>
       <td>Authorized Xiaomi Mall PH</td>
       <td class="mono">2</td>
       <td class="mono">₱3,420</td>
       <td class="mono">₱1,710</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:32.98929294877978%"></div></div></td>
-    </tr><tr>
-      <td>ajummakoreanmart</td>
-      <td class="mono">5</td>
-      <td class="mono">₱2,774</td>
-      <td class="mono">₱555</td>
-      <td><div class="bar-track"><div class="bar-fill" style="width:26.75798205845471%"></div></div></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:33.0%"></div></div></td>
     </tr></tbody>
     </table>
   </div>
 </section>
 
-<!-- Insights → taste-skill: asymmetric 2-1-1-1-1-1 -->
 <section class="section" style="padding-bottom:48px">
   <div class="section-header">
     <div class="section-title">
@@ -588,15 +423,15 @@ footer .footer-text{
   <div class="insights"><article class="insight-tile">
       <div class="insight-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
       <h4 class="insight-title">지출 증가 추세</h4>
-      <p class="insight-desc">월 평균 +79% 상승. 유아용품 비중 확대 중 — 지호 성장에 따른 자연스러운 패턴.</p>
+      <p class="insight-desc">월 평균 +52% 상승. 유아용품 비중 확대 중 — 지호 성장에 따른 자연스러운 패턴.</p>
     </article><article class="insight-tile">
       <div class="insight-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-      <h4 class="insight-title">취소율 6.9% (27건)</h4>
+      <h4 class="insight-title">취소율 6.8% (27건)</h4>
       <p class="insight-desc">주 원인: 배송지연·가격변동 후 재주문. 결제 전 배송 예상일 확인 습관화로 절감 가능.</p>
     </article><article class="insight-tile">
       <div class="insight-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
-      <h4 class="insight-title">최다 지출: 기타 (35%)</h4>
-      <p class="insight-desc">전체 ₱171,605 중 ₱95,995 상당. 반복 구매 품목 다수 — 대량 구매 할인 검토 시점.</p>
+      <h4 class="insight-title">최다 지출: 기타 (36%)</h4>
+      <p class="insight-desc">전체 ₱177,544 중 ₱103,293 상당. 반복 구매 품목 다수 — 대량 구매 할인 검토 시점.</p>
     </article><article class="insight-tile">
       <div class="insight-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div>
       <h4 class="insight-title">반품 9건 · 환불 ₱4,086</h4>
@@ -616,7 +451,7 @@ footer .footer-text{
 
 <footer>
   <div class="container">
-    <div class="footer-text">Shopee Dashboard · Generated 2026-06-15 · Taste-Skill Edition · GitHub Pages</div>
+    <div class="footer-text">Shopee Dashboard · Generated 2026-06-22 · Taste-Skill Edition · GitHub Pages</div>
   </div>
 </footer>
 
@@ -631,13 +466,13 @@ new Chart(document.getElementById('trendChart'), {
     labels: ["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4"],
     datasets: [{
       type: 'bar', label: '지출',
-      data: [6093, 3697, 8495, 2311, 10507, 1648],
+      data: [6093, 3697, 8495, 2311, 10507, 7587],
       backgroundColor: 'rgba(16,185,129,0.22)',
       borderColor: '#10b981',
       borderRadius: 5, borderWidth: 1
     }, {
       type: 'line', label: '주문수',
-      data: [22, 7, 8, 7, 28, 6],
+      data: [22, 7, 8, 7, 28, 9],
       borderColor: '#34d399', backgroundColor: 'transparent',
       tension: 0.4, pointRadius: 3, pointBackgroundColor: '#34d399',
       borderWidth: 1.5, yAxisID: 'y1'
@@ -659,7 +494,7 @@ new Chart(document.getElementById('categoryChart'), {
   type: 'doughnut',
   data: {
     labels: ["\uae30\ud0c0", "\uc2dd\ud488", "\uc0dd\ud65c\uc6a9\ud488", "\uac00\uc804/\uc804\uc790", "\uc720\uc544\uc6a9\ud488", "\ubc18\ub824\ub3d9\ubb3c", "\uc758\ub958/\ud328\uc158"],
-    datasets: [{ data: [95995, 94916, 31211, 29582, 12430, 8025, 3533],
+    datasets: [{ data: [103293, 95914, 31211, 29582, 12430, 8025, 3533],
       backgroundColor: ['#10b981','#34d399','#6ee7b7','#a7f3d0','#f59e0b','#f472b6','#53575e'],
       borderWidth: 0, borderRadius: 4, spacing: 2
     }]
